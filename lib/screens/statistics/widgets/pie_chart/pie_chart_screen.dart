@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'dart:math';
 import '../../../../utils/icons_list.dart';
+import '../../../home/widgets/transaction_card.dart';
 
 class PieChartScreen extends StatefulWidget {
   @override
@@ -25,6 +26,53 @@ class _PieChartScreenState extends State<PieChartScreen> {
     userId = FirebaseAuth.instance.currentUser!.uid;
   }
 
+  void _showTransactionDetailsDialog(
+      BuildContext context, List<Map<String, dynamic>> transactions) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        var category = transactions[0]['category'];
+        return AlertDialog(
+          title: Text('Chi tiết: $category'),
+          content: Container(
+            width: double.maxFinite,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text('Số giao dịch: ${transactions.length}'),
+                SizedBox(height: 16),
+                Expanded(
+                  child: ListView.builder(
+                    shrinkWrap: true,
+                    itemCount: transactions.length,
+                    itemBuilder: (context, index) {
+                      var transaction = transactions[index];
+                      return Card(
+                        child: ListTile(
+                          leading: Icon(transaction['icon']),
+                          title: Text('Category: ${transaction['category']}'),
+                          subtitle: Text(
+                            'Số tiền: ${NumberFormat.currency(locale: 'vi_VN', symbol: '₫').format(transaction['amount'])}',
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+                ),
+              ],
+            ),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(),
+              child: Text('Đóng'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   void previousMonth() {
     setState(() {
       currentMonth = DateTime(currentMonth.year, currentMonth.month - 1, 1);
@@ -35,6 +83,20 @@ class _PieChartScreenState extends State<PieChartScreen> {
     setState(() {
       currentMonth = DateTime(currentMonth.year, currentMonth.month + 1, 1);
     });
+  }
+
+  // Thêm một hàm để lọc transactions theo category và type
+  List<Map<String, dynamic>> getTransactionsForCategory(
+      String category, String type, QuerySnapshot snapshot) {
+    return snapshot.docs
+        .map((doc) => doc.data() as Map<String, dynamic>)
+        .where((data) => data['category'] == category && data['type'] == type)
+        .toList();
+  }
+
+  int getTotalTransactionsForCategory(
+      String category, String type, QuerySnapshot snapshot) {
+    return getTransactionsForCategory(category, type, snapshot).length;
   }
 
   Map<String, Map<String, List<Map<String, dynamic>>>> processTransactions(
@@ -123,7 +185,6 @@ class _PieChartScreenState extends State<PieChartScreen> {
 
             index++;
           });
-
           return MapEntry(type, categoryList);
         }),
       );
@@ -275,27 +336,45 @@ class _PieChartScreenState extends State<PieChartScreen> {
                     ),
                     SizedBox(height: 16),
                     ...data[currentMonthString]![selectedType]!.map((e) {
-                      return Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Card(
-                          color: (e['color'] as Color).withOpacity(0.1),
-                          child: Center(
-                            child: ListTile(
-                              leading: Icon(
-                                e['icon'] as IconData,
-                                color: e['color'] as Color,
-                              ),
-                              title: Text(
-                                '${e['category']}',
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
+                      return GestureDetector(
+                        onTap: () {
+                          var transactions = getTransactionsForCategory(
+                              e['category'], selectedType, snapshot.data!);
+                          _showTransactionDetailsDialog(context, transactions);
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Card(
+                            color: (e['color'] as Color).withOpacity(0.1),
+                            child: Center(
+                              child: ListTile(
+                                leading: Icon(
+                                  e['icon'] as IconData,
+                                  color: e['color'] as Color,
                                 ),
-                                textAlign: TextAlign.center,
-                              ),
-                              subtitle: Text(
-                                'Số tiền: ${currencyFormat.format(e['amount'] as double)}\n'
-                                'Chiếm: ${(e['percentage'] as double).toStringAsFixed(2)}%',
-                                textAlign: TextAlign.center,
+                                title: Text(
+                                  '${e['category']}',
+                                  style: TextStyle(fontWeight: FontWeight.bold),
+                                  textAlign: TextAlign.center,
+                                ),
+                                subtitle: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      'Số tiền: ${currencyFormat.format(e['amount'] as double)}',
+                                      textAlign: TextAlign.center,
+                                    ),
+                                    Text(
+                                      'Chiếm: ${(e['percentage'] as double).toStringAsFixed(2)}%',
+                                      textAlign: TextAlign.center,
+                                    ),
+                                    Text(
+                                      'Số giao dịch: ${getTotalTransactionsForCategory(e['category'], selectedType, snapshot.data!)}',
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
                           ),
