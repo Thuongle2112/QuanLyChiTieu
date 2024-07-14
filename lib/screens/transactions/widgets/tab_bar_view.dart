@@ -4,7 +4,12 @@ import 'package:expense_tracker/screens/transactions/widgets/transaction_list.da
 import 'package:flutter/material.dart';
 
 class TypeTabBar extends StatelessWidget {
-  TypeTabBar({Key? key, required this.category, required this.monthYear, required String searchQuery}) : super(key: key);
+  TypeTabBar(
+      {Key? key,
+      required this.category,
+      required this.monthYear,
+      required String searchQuery})
+      : super(key: key);
 
   final String category;
   final String monthYear;
@@ -47,4 +52,3 @@ class TypeTabBar extends StatelessWidget {
     );
   }
 }
-

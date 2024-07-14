@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 
 class Navbar extends StatelessWidget {
-  const Navbar({super.key, required this.selectedIndex, required this.onDestinationSelected});
+  const Navbar(
+      {super.key,
+      required this.selectedIndex,
+      required this.onDestinationSelected});
 
   final int selectedIndex;
   final ValueChanged<int> onDestinationSelected;
+
   @override
   Widget build(BuildContext context) {
     return NavigationBar(

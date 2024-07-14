@@ -14,7 +14,8 @@ class CashFlow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    NumberFormat currencyFormat = NumberFormat.currency(locale: 'vi_VN', symbol: '₫');
+    NumberFormat currencyFormat =
+        NumberFormat.currency(locale: 'vi_VN', symbol: '₫');
 
     return Container(
       padding: EdgeInsets.all(16.0),
@@ -65,7 +66,10 @@ class CashFlow extends StatelessWidget {
               ),
               Text(
                 currencyFormat.format(totalCredit),
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.green),
+                style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.green),
               ),
             ],
           ),
@@ -79,7 +83,10 @@ class CashFlow extends StatelessWidget {
               ),
               Text(
                 currencyFormat.format(totalDebit),
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold, color: Colors.red),
+                style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.red),
               ),
             ],
           ),

@@ -6,7 +6,6 @@ import 'package:expense_tracker/widgets/navbar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-
 class Dashboard extends StatefulWidget {
   const Dashboard({super.key});
 
@@ -35,7 +34,6 @@ class _DashboardState extends State<Dashboard> {
           });
         },
       ),
-
       body: IndexedStack(
         index: currentIndex,
         children: pageViewList,

@@ -100,7 +100,8 @@ class _LoginViewState extends State<LoginView> {
                     Divider(thickness: 1, color: Colors.grey),
                     Container(
                       color: Color(0xFF1E292F),
-                      padding: EdgeInsets.symmetric(horizontal: 10.0), // Padding around the text
+                      padding: EdgeInsets.symmetric(horizontal: 10.0),
+                      // Padding around the text
                       child: Text(
                         "Hoặc",
                         style: TextStyle(
@@ -125,25 +126,26 @@ class _LoginViewState extends State<LoginView> {
                     child: isLoader
                         ? Center(child: CircularProgressIndicator())
                         : Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Container(
-                          height: 24, // Image height to fit within the button
-                          child: Image.asset(
-                            'assets/google.png', // Path to your Google image asset
-                            fit: BoxFit.contain,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Container(
+                                height:
+                                    24,
+                                child: Image.asset(
+                                  'assets/google.png',
+                                  fit: BoxFit.contain,
+                                ),
+                              ),
+                              SizedBox(width: 10),
+                              Text(
+                                "Đăng nhập bằng Google",
+                                style: TextStyle(
+                                  fontSize: 20,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ],
                           ),
-                        ),
-                        SizedBox(width: 10), // Space between the icon and the text
-                        Text(
-                          "Đăng nhập bằng Google",
-                          style: TextStyle(
-                            fontSize: 20,
-                            color: Colors.white,
-                          ),
-                        ),
-                      ],
-                    ),
                   ),
                 ),
                 SizedBox(height: 30.0),
@@ -163,7 +165,8 @@ class _LoginViewState extends State<LoginView> {
                       },
                       child: Text(
                         "Đăng ký",
-                        style: TextStyle(fontSize: 16, color: Color(0xFFCC5311)),
+                        style:
+                            TextStyle(fontSize: 16, color: Color(0xFFCC5311)),
                       ),
                     ),
                   ],

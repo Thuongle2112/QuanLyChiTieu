@@ -3,6 +3,7 @@ import 'package:intl/intl.dart';
 
 class TimeLineMonth extends StatefulWidget {
   const TimeLineMonth({super.key, required this.onChanged});
+
   final ValueChanged<String?> onChanged;
 
   @override
@@ -13,18 +14,19 @@ class _TimeLineMonthState extends State<TimeLineMonth> {
   String currentMonth = "";
   List<String> months = [];
   final scrollController = ScrollController();
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     DateTime now = DateTime.now();
     for (int i = -12; i <= 0; i++) {
-      months.add(
-          DateFormat('M/y').format(DateTime(now.year, now.month + i, 1)));
+      months
+          .add(DateFormat('M/y').format(DateTime(now.year, now.month + i, 1)));
     }
     currentMonth = DateFormat('M/y').format(now);
-    
-    Future.delayed(Duration(seconds: 1), (){
+
+    Future.delayed(Duration(seconds: 1), () {
       scrolltoSelectMonth();
     });
   }

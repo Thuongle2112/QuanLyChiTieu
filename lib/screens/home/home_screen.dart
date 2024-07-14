@@ -44,7 +44,7 @@ class _HomeScreenState extends State<HomeScreen> {
     user = _auth.currentUser;
     if (user != null) {
       DocumentSnapshot userDoc =
-      await _firestore.collection('users').doc(user!.uid).get();
+          await _firestore.collection('users').doc(user!.uid).get();
       setState(() {
         userData = userDoc.data() as Map<String, dynamic>?;
       });
@@ -57,7 +57,9 @@ class _HomeScreenState extends State<HomeScreen> {
       resizeToAvoidBottomInset: false,
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: FloatingActionButton.extended(
-        onPressed: () {_dialogBuilder(context);},
+        onPressed: () {
+          _dialogBuilder(context);
+        },
         icon: Icon(Icons.add),
         label: Text("Thêm"),
         backgroundColor: Colors.blueAccent.shade100,
@@ -83,7 +85,9 @@ class _HomeScreenState extends State<HomeScreen> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            HeroCard(userId: userId,),
+            HeroCard(
+              userId: userId,
+            ),
             TransactionsCards(),
           ],
         ),

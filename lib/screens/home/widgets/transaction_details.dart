@@ -10,7 +10,7 @@ class TransactionDetailsScreen extends StatelessWidget {
   TransactionDetailsScreen({super.key, required this.data});
 
   final NumberFormat currencyFormat =
-  NumberFormat.currency(locale: 'vi_VN', symbol: '₫');
+      NumberFormat.currency(locale: 'vi_VN', symbol: '₫');
   final AppIcons appIcons = AppIcons();
 
   @override
@@ -51,14 +51,17 @@ class TransactionDetailsScreen extends StatelessWidget {
                       formattedAmount,
                       style: TextStyle(
                         fontSize: 20,
-                        color: data['type'] == 'credit' ? Colors.green : Colors.red,
+                        color: data['type'] == 'credit'
+                            ? Colors.green
+                            : Colors.red,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                     SizedBox(width: 10),
                     FaIcon(
                       appIcons.getExpenseCategoryIcons('${data['category']}'),
-                      color: data['type'] == 'credit' ? Colors.green : Colors.red,
+                      color:
+                          data['type'] == 'credit' ? Colors.green : Colors.red,
                       size: 30,
                     ),
                   ],
@@ -91,8 +94,8 @@ class TransactionDetailsScreen extends StatelessWidget {
               child: Column(
                 children: [
                   ListTile(
-                    leading: FaIcon(
-                        appIcons.getExpenseCategoryIcons('${data['category']}')),
+                    leading: FaIcon(appIcons
+                        .getExpenseCategoryIcons('${data['category']}')),
                     title: Text('Danh mục'),
                     trailing: Text('${data['category']}'),
                   ),
@@ -137,7 +140,7 @@ class TransactionDetailsScreen extends StatelessWidget {
                             child: IconButton(
                               icon: Icon(Icons.edit, color: Colors.white),
                               onPressed: () {
-                                // Add your edit action here
+
                               },
                             ),
                           ),
@@ -156,7 +159,7 @@ class TransactionDetailsScreen extends StatelessWidget {
                             child: IconButton(
                               icon: Icon(Icons.delete, color: Colors.white),
                               onPressed: () {
-                                // Add your delete action here
+
                               },
                             ),
                           ),

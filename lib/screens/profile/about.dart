@@ -11,7 +11,7 @@ class About extends StatelessWidget {
 
   Uri dialNumber = Uri(scheme: 'tel', path: '0833560332');
 
-  callNumber() async{
+  callNumber() async {
     await launchUrl(dialNumber);
   }
 
@@ -68,14 +68,17 @@ class About extends StatelessWidget {
                     children: [
                       Icon(Icons.facebook, color: Colors.blue),
                       SizedBox(width: 10),
-                      Text('Phạm Lê Thưởng',style: TextStyle(color: Colors.white),),
+                      Text(
+                        'Phạm Lê Thưởng',
+                        style: TextStyle(color: Colors.white),
+                      ),
                     ],
                   ),
                 ),
                 SizedBox(height: 10),
                 ElevatedButton(
                   onPressed: () {
-                    // Add your email onTap code here
+
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.amber,
@@ -86,23 +89,28 @@ class About extends StatelessWidget {
                     children: [
                       Icon(Icons.email, color: Colors.white),
                       SizedBox(width: 10),
-                      Text('667715koco@gmail.com',style: TextStyle(color: Colors.black),),
+                      Text(
+                        '667715koco@gmail.com',
+                        style: TextStyle(color: Colors.black),
+                      ),
                     ],
                   ),
                 ),
                 SizedBox(height: 10),
                 ElevatedButton(
                   onPressed: () {
-                    // Add your Instagram onTap code here
+
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.amber, // Màu nền của nút
-                    padding: EdgeInsets.zero, // Xóa padding để căn giữa nội dung
+                    padding:
+                        EdgeInsets.zero, // Xóa padding để căn giữa nội dung
                   ),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      FaIcon(FontAwesomeIcons.instagram, color: Colors.pink), // Icon Instagram
+                      FaIcon(FontAwesomeIcons.instagram, color: Colors.pink),
+                      // Icon Instagram
                       SizedBox(width: 10),
                       Text(
                         'Instagram',
@@ -123,7 +131,10 @@ class About extends StatelessWidget {
                     children: [
                       Icon(Icons.call, color: Colors.green),
                       SizedBox(width: 10),
-                      Text('0833560332',style: TextStyle(color: Colors.black),),
+                      Text(
+                        '0833560332',
+                        style: TextStyle(color: Colors.black),
+                      ),
                     ],
                   ),
                 )

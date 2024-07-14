@@ -50,7 +50,6 @@ class _EditProfileState extends State<EditProfile> {
     });
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -64,53 +63,70 @@ class _EditProfileState extends State<EditProfile> {
       body: userData == null
           ? Center(child: CircularProgressIndicator())
           : Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          children: [
-            ListTile(
-              leading: Icon(Icons.person),
-              title: Text('Tài khoản'),
-              subtitle: Text(userData!['username'] ?? ''),
-              trailing: IconButton(
-                icon: Icon(Icons.edit),
-                onPressed: () => _editProfileService.editField(
-                    context, user!, 'username', userData!['username'] ?? '', false, _refreshData),
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                children: [
+                  ListTile(
+                    leading: Icon(Icons.person),
+                    title: Text('Tài khoản'),
+                    subtitle: Text(userData!['username'] ?? ''),
+                    trailing: IconButton(
+                      icon: Icon(Icons.edit),
+                      onPressed: () => _editProfileService.editField(
+                          context,
+                          user!,
+                          'username',
+                          userData!['username'] ?? '',
+                          false,
+                          _refreshData),
+                    ),
+                  ),
+                  Divider(),
+                  SizedBox(height: 16.0),
+                  ListTile(
+                    leading: Icon(Icons.mail),
+                    title: Text('Email'),
+                    subtitle: Text(userData!['email'] ?? ''),
+                  ),
+                  Divider(),
+                  SizedBox(height: 16.0),
+                  ListTile(
+                    leading: Icon(Icons.call),
+                    title: Text('Số điện thoại'),
+                    subtitle: Text(userData!['phone'] ?? ''),
+                    trailing: IconButton(
+                      icon: Icon(Icons.edit),
+                      onPressed: () => _editProfileService.editField(
+                          context,
+                          user!,
+                          'phone',
+                          userData!['phone'] ?? '',
+                          false,
+                          _refreshData),
+                    ),
+                  ),
+                  Divider(),
+                  SizedBox(height: 16.0),
+                  ElevatedButton(
+                    onPressed: () => _editProfileService.changePassword(
+                        context, user!, _refreshData),
+                    child: const Text(
+                      'Đổi mật khẩu',
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                  SizedBox(height: 16.0),
+                  ElevatedButton(
+                    onPressed: () => _editProfileService.restoreData(
+                        context, user!, _refreshData),
+                    child: Text(
+                      'Làm mới dữ liệu',
+                      style: TextStyle(fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                ],
               ),
             ),
-            Divider(),
-            SizedBox(height: 16.0),
-            ListTile(
-              leading: Icon(Icons.mail),
-              title: Text('Email'),
-              subtitle: Text(userData!['email'] ?? ''),
-            ),
-            Divider(),
-            SizedBox(height: 16.0),
-            ListTile(
-              leading: Icon(Icons.call),
-              title: Text('Số điện thoại'),
-              subtitle: Text(userData!['phone'] ?? ''),
-              trailing: IconButton(
-                icon: Icon(Icons.edit),
-                onPressed: () =>
-                    _editProfileService.editField(
-                        context, user!, 'phone', userData!['phone'] ?? '', false, _refreshData),
-              ),
-            ),
-            Divider(),
-            SizedBox(height: 16.0),
-            ElevatedButton(
-              onPressed: () => _editProfileService.changePassword(context, user!, _refreshData),
-              child: const Text('Đổi mật khẩu',style: TextStyle(fontWeight: FontWeight.bold),),
-            ),
-            SizedBox(height: 16.0),
-            ElevatedButton(
-              onPressed: () => _editProfileService.restoreData(context, user!, _refreshData),
-              child: Text('Làm mới dữ liệu',style: TextStyle(fontWeight: FontWeight.bold),),
-            ),
-          ],
-        ),
-      ),
     );
   }
 }

@@ -21,7 +21,8 @@ class MyApp extends StatelessWidget {
       title: 'Quản lý chi tiêu cá nhân',
       builder: (context, child) {
         return MediaQuery(
-            data: MediaQuery.of(context).copyWith(textScaler: TextScaler.linear(1.0)),
+            data: MediaQuery.of(context)
+                .copyWith(textScaler: TextScaler.linear(1.0)),
             child: child!);
       },
       theme: ThemeData(

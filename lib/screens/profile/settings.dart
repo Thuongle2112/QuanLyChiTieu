@@ -12,6 +12,7 @@ class _SettingsPageState extends State<SettingsPage> {
   String _selectedFontStyle = 'aBeeZee';
   bool _darkMode = false;
   String _selectedCurrency = '₫-VND';
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -19,8 +20,7 @@ class _SettingsPageState extends State<SettingsPage> {
         // automaticallyImplyLeading: false,
         backgroundColor: Colors.blueAccent.shade100,
         title: Center(
-          child: Text("Cài đặt",
-              style: TextStyle(color: Colors.white)),
+          child: Text("Cài đặt", style: TextStyle(color: Colors.white)),
         ),
       ),
       body: Padding(
@@ -32,8 +32,8 @@ class _SettingsPageState extends State<SettingsPage> {
               title: Text('Kiểu chữ'),
               subtitle: DropdownButtonFormField<String>(
                 value: _selectedFontStyle,
-                items: <String>['aBeeZee', 'Roboto', 'Lato']
-                    .map((String value) {
+                items:
+                    <String>['aBeeZee', 'Roboto', 'Lato'].map((String value) {
                   return DropdownMenuItem<String>(
                     value: value,
                     child: Text(value),
@@ -66,7 +66,7 @@ class _SettingsPageState extends State<SettingsPage> {
               title: Text('Tiền tệ'),
               subtitle: DropdownButtonFormField<String>(
                 value: _selectedCurrency,
-                items: <String>['₫-VND','₹-INR', '\$-USD', '€-EUR']
+                items: <String>['₫-VND', '₹-INR', '\$-USD', '€-EUR']
                     .map((String value) {
                   return DropdownMenuItem<String>(
                     value: value,

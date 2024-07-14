@@ -13,9 +13,9 @@ class PieChartScreen extends StatefulWidget {
 
 class _PieChartScreenState extends State<PieChartScreen> {
   late String userId;
-  String selectedType = 'credit'; // Default selected type
+  String selectedType = 'credit';
   var appIcons = AppIcons();
-  DateTime currentMonth = DateTime.now(); // Default current month
+  DateTime currentMonth = DateTime.now();
   int? touchedIndex;
   Map<String, Color> categoryColors = {};
 
@@ -45,7 +45,7 @@ class _PieChartScreenState extends State<PieChartScreen> {
       var data = doc.data() as Map<String, dynamic>;
       String type = data['type'];
       String category = data['category'];
-      double amount = data['amount'].toDouble(); // Convert amount to double
+      double amount = data['amount'].toDouble();
       String monthYear = data['monthyear'];
 
       if (!rawData.containsKey(monthYear)) {
@@ -172,7 +172,8 @@ class _PieChartScreenState extends State<PieChartScreen> {
                   ),
                   child: IconButton(
                     icon: Icon(Icons.monetization_on),
-                    color: selectedType == 'credit' ? Colors.white : Colors.black,
+                    color:
+                        selectedType == 'credit' ? Colors.white : Colors.black,
                     onPressed: switchToCredit,
                     tooltip: 'Hiển thị biểu đồ thanh toán',
                   ),
@@ -187,7 +188,8 @@ class _PieChartScreenState extends State<PieChartScreen> {
                   ),
                   child: IconButton(
                     icon: Icon(Icons.money_off),
-                    color: selectedType == 'debit' ? Colors.white : Colors.black,
+                    color:
+                        selectedType == 'debit' ? Colors.white : Colors.black,
                     onPressed: switchToDebit,
                     tooltip: 'Hiển thị biểu đồ thu nhập',
                   ),
@@ -199,7 +201,8 @@ class _PieChartScreenState extends State<PieChartScreen> {
                   .collection('users')
                   .doc(userId)
                   .collection('transactions')
-                  .where('monthyear', isEqualTo: DateFormat('M/y').format(currentMonth))
+                  .where('monthyear',
+                      isEqualTo: DateFormat('M/y').format(currentMonth))
                   .snapshots(),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
@@ -215,7 +218,8 @@ class _PieChartScreenState extends State<PieChartScreen> {
                 }
 
                 var data = processTransactions(snapshot.data!);
-                String currentMonthString = DateFormat('M/y').format(currentMonth);
+                String currentMonthString =
+                    DateFormat('M/y').format(currentMonth);
 
                 if (!data.containsKey(currentMonthString) ||
                     !data[currentMonthString]!.containsKey(selectedType) ||
@@ -223,7 +227,8 @@ class _PieChartScreenState extends State<PieChartScreen> {
                   return Center(child: Text('Không có dữ liệu cho loại này'));
                 }
 
-                String chartTitle = selectedType == 'credit' ? 'Thanh toán' : 'Thu nhập';
+                String chartTitle =
+                    selectedType == 'credit' ? 'Thanh toán' : 'Thu nhập';
 
                 return Column(
                   children: [
@@ -233,8 +238,8 @@ class _PieChartScreenState extends State<PieChartScreen> {
                       aspectRatio: 1.3,
                       child: PieChart(
                         PieChartData(
-                          sections: data[currentMonthString]![selectedType]!
-                              .map((e) {
+                          sections:
+                              data[currentMonthString]![selectedType]!.map((e) {
                             final value = e['section'] as PieChartSectionData;
                             final itemIndex = e['index'] as int;
                             return PieChartSectionData(
@@ -242,21 +247,25 @@ class _PieChartScreenState extends State<PieChartScreen> {
                               value: value.value,
                               color: value.color,
                               titleStyle: value.titleStyle,
-                              titlePositionPercentageOffset: value.titlePositionPercentageOffset,
+                              titlePositionPercentageOffset:
+                                  value.titlePositionPercentageOffset,
                               badgeWidget: value.badgeWidget,
-                              badgePositionPercentageOffset: value.badgePositionPercentageOffset,
+                              badgePositionPercentageOffset:
+                                  value.badgePositionPercentageOffset,
                               radius: touchedIndex == itemIndex ? 80 : 70,
                             );
-                          })
-                              .toList(),
+                          }).toList(),
                           centerSpaceRadius: 50,
                           sectionsSpace: 2,
                           borderData: FlBorderData(show: false),
                           pieTouchData: PieTouchData(
-                            touchCallback: (FlTouchEvent event, pieTouchResponse) {
-                              if (event is FlTapUpEvent || event is FlTapDownEvent) {
+                            touchCallback:
+                                (FlTouchEvent event, pieTouchResponse) {
+                              if (event is FlTapUpEvent ||
+                                  event is FlTapDownEvent) {
                                 setState(() {
-                                  touchedIndex = pieTouchResponse?.touchedSection?.touchedSectionIndex;
+                                  touchedIndex = pieTouchResponse
+                                      ?.touchedSection?.touchedSectionIndex;
                                 });
                               }
                             },
@@ -285,7 +294,7 @@ class _PieChartScreenState extends State<PieChartScreen> {
                               ),
                               subtitle: Text(
                                 'Số tiền: ${currencyFormat.format(e['amount'] as double)}\n'
-                                    'Chiếm: ${(e['percentage'] as double).toStringAsFixed(2)}%',
+                                'Chiếm: ${(e['percentage'] as double).toStringAsFixed(2)}%',
                                 textAlign: TextAlign.center,
                               ),
                             ),

@@ -38,6 +38,7 @@ class RecentTransactionList extends StatelessWidget {
   final userId = FirebaseAuth.instance.currentUser!.uid;
 
   get doNothing => null;
+
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<QuerySnapshot>(
@@ -63,7 +64,7 @@ class RecentTransactionList extends StatelessWidget {
             itemCount: data.length,
             itemBuilder: (context, index) {
               var cardData = data[index];
-              var transactionId = cardData.id; // Assuming id is the document ID
+              var transactionId = cardData.id;
 
               return Slidable(
                 endActionPane: ActionPane(
@@ -72,7 +73,8 @@ class RecentTransactionList extends StatelessWidget {
                     SlidableAction(
                       onPressed: (context) {
                         print('Sửa');
-                        _showEditTransactionDialog(context, userId, transactionId, cardData);
+                        _showEditTransactionDialog(
+                            context, userId, transactionId, cardData);
                       },
                       backgroundColor: const Color(0xFF7BC043),
                       foregroundColor: Colors.white,
@@ -81,7 +83,8 @@ class RecentTransactionList extends StatelessWidget {
                     ),
                     SlidableAction(
                       onPressed: (context) {
-                        Utils.deleteTransaction(context, userId, transactionId, cardData);
+                        Utils.deleteTransaction(
+                            context, userId, transactionId, cardData);
                       },
                       backgroundColor: const Color(0xFFFC0707),
                       foregroundColor: Colors.white,
@@ -99,14 +102,17 @@ class RecentTransactionList extends StatelessWidget {
         });
   }
 }
-void _showEditTransactionDialog(BuildContext context, String userId, String transactionId, DocumentSnapshot cardData) {
+
+void _showEditTransactionDialog(BuildContext context, String userId,
+    String transactionId, DocumentSnapshot cardData) {
   showDialog(
     context: context,
     builder: (BuildContext context) {
       return Dialog(
         child: EditTransactionScreen(
-          userData: null, // Pass any necessary user data if needed
-          transactionData: cardData.data() as Map<String, dynamic>?, // Pass transaction data
+          userData: null,
+          transactionData:
+              cardData.data() as Map<String, dynamic>?,
         ),
       );
     },

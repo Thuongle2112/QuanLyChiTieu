@@ -41,11 +41,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
     try {
       final GoogleSignIn googleSignIn = GoogleSignIn();
       if (user != null) {
-        // Check if the user signed in with Google
-        if (user!.providerData.any((provider) => provider.providerId == 'google.com')) {
-          await googleSignIn.signOut(); // Sign out from Google
+        // Kiểm tra nếu người dùng đăng nhập bằng Google
+        if (user!.providerData
+            .any((provider) => provider.providerId == 'google.com')) {
+          await googleSignIn.signOut(); // Đăng xuất Google
         }
-        await FirebaseAuth.instance.signOut(); // Sign out from Firebase
+        await FirebaseAuth.instance.signOut(); // Đăng xuất Firebase
       }
 
       Navigator.pushReplacement(
@@ -66,7 +67,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   Future<void> _pickImage() async {
-    final pickedFile = await ImagePicker().pickImage(source: ImageSource.gallery);
+    final pickedFile =
+        await ImagePicker().pickImage(source: ImageSource.gallery);
 
     if (pickedFile != null) {
       setState(() {
@@ -83,11 +85,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
     });
 
     try {
-      final ref = _storage.ref().child('user_avatars').child('${user!.uid}.jpg');
+      final ref =
+          _storage.ref().child('user_avatars').child('${user!.uid}.jpg');
       await ref.putFile(_imageFile!);
 
       final url = await ref.getDownloadURL();
-      await _firestore.collection('users').doc(user!.uid).update({'avatarUrl': url});
+      await _firestore
+          .collection('users')
+          .doc(user!.uid)
+          .update({'avatarUrl': url});
     } catch (e) {
       print(e);
     } finally {
@@ -136,7 +142,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       backgroundColor: Colors.black,
                       backgroundImage: userData['avatarUrl'] != null
                           ? NetworkImage(userData['avatarUrl'])
-                          : AssetImage('assets/profile_picture.png') as ImageProvider,
+                          : AssetImage('assets/profile_picture.png')
+                              as ImageProvider,
                     ),
                     Positioned(
                       bottom: 0,
@@ -216,8 +223,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   onPressed: isLogoutLoading ? null : logOut,
                   child: isLogoutLoading
                       ? CircularProgressIndicator(
-                    valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
-                  )
+                          valueColor:
+                              AlwaysStoppedAnimation<Color>(Colors.white),
+                        )
                       : Text('Đăng xuất'),
                 ),
               ],

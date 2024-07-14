@@ -6,6 +6,7 @@ import '../../../utils/icons_list.dart';
 
 class CategoryList extends StatefulWidget {
   const CategoryList({super.key, required this.onChanged});
+
   final ValueChanged<String?> onChanged;
 
   @override
@@ -13,16 +14,15 @@ class CategoryList extends StatefulWidget {
 }
 
 class _TimeLineMonthState extends State<CategoryList> {
-  String currentCategory = "All";
+  String currentCategory = "Tất cả";
   List<Map<String, dynamic>> categoryList = [];
 
   final scrollController = ScrollController();
   var appIcons = AppIcons();
   var addCat = {
-    'name': 'All',
+    'name': 'Tất cả',
     'icon': FontAwesomeIcons.cartPlus,
   };
-
 
   @override
   void initState() {
@@ -34,14 +34,6 @@ class _TimeLineMonthState extends State<CategoryList> {
     });
   }
 
-  // scrolltoSelectMonth() {
-  //   final selectedMonthIndex = months.indexOf(currentMonth);
-  //   if (selectedMonthIndex != -1) {
-  //     final scrollOffset = (selectedMonthIndex * 100.0) - 170;
-  //     scrollController.animateTo(scrollOffset,
-  //         duration: Duration(microseconds: 500), curve: Curves.ease);
-  //   }
-  // }
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -77,7 +69,9 @@ class _TimeLineMonthState extends State<CategoryList> {
                           ? Colors.black
                           : Colors.blue.shade900,
                     ),
-                    SizedBox( width: 10,),
+                    SizedBox(
+                      width: 10,
+                    ),
                     Text(
                       data['name'],
                       style: TextStyle(

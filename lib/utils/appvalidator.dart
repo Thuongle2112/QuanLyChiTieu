@@ -1,4 +1,4 @@
-class AppValidator  {
+class AppValidator {
   String? validateUserName(value) {
     if (value!.isEmpty) {
       return 'Nhập tài khoản';

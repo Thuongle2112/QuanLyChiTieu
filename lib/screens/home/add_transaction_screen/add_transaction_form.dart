@@ -109,7 +109,6 @@ class _AddTransactionFormState extends State<AddTransactionForm> {
     }
   }
 
-
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(

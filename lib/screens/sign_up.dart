@@ -90,7 +90,8 @@ class _SignUpViewState extends State<SignUpView> {
                   keyboardType: TextInputType.phone,
                   style: TextStyle(color: Colors.white),
                   autovalidateMode: AutovalidateMode.onUserInteraction,
-                  decoration: _buildInputDecoration("Số điện thoại", Icons.call),
+                  decoration:
+                      _buildInputDecoration("Số điện thoại", Icons.call),
                   validator: appValidator.validatePhoneNumber,
                 ),
                 SizedBox(height: 16.0),
@@ -114,9 +115,9 @@ class _SignUpViewState extends State<SignUpView> {
                     child: isLoader
                         ? Center(child: CircularProgressIndicator())
                         : Text(
-                      "Tạo",
-                      style: TextStyle(fontSize: 20, color: Colors.white),
-                    ),
+                            "Tạo",
+                            style: TextStyle(fontSize: 20, color: Colors.white),
+                          ),
                   ),
                 ),
                 SizedBox(height: 20.0),
@@ -126,7 +127,7 @@ class _SignUpViewState extends State<SignUpView> {
                     Divider(thickness: 1, color: Colors.grey),
                     Container(
                       color: Color(0xFF1E292F),
-                      padding: EdgeInsets.symmetric(horizontal: 10.0), // Padding around the text
+                      padding: EdgeInsets.symmetric(horizontal: 10.0),
                       child: Text(
                         "Hoặc",
                         style: TextStyle(
@@ -151,25 +152,27 @@ class _SignUpViewState extends State<SignUpView> {
                     child: isLoader
                         ? Center(child: CircularProgressIndicator())
                         : Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Container(
-                          height: 24, // Image height to fit within the button
-                          child: Image.asset(
-                            'assets/google.png', // Path to your Google image asset
-                            fit: BoxFit.contain,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Container(
+                                height:
+                                    24,
+                                child: Image.asset(
+                                  'assets/google.png',
+                                  fit: BoxFit.contain,
+                                ),
+                              ),
+                              SizedBox(width: 10),
+                              // Khoảng cách giữa icon và text
+                              Text(
+                                "Đăng nhập bằng Google",
+                                style: TextStyle(
+                                  fontSize: 20,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ],
                           ),
-                        ),
-                        SizedBox(width: 10), // Space between the icon and the text
-                        Text(
-                          "Đăng nhập bằng Google",
-                          style: TextStyle(
-                            fontSize: 20,
-                            color: Colors.white,
-                          ),
-                        ),
-                      ],
-                    ),
                   ),
                 ),
                 SizedBox(height: 30.0),
@@ -189,7 +192,8 @@ class _SignUpViewState extends State<SignUpView> {
                       },
                       child: Text(
                         "Đăng nhập",
-                        style: TextStyle(fontSize: 16, color: Color(0xFFCC5311)),
+                        style:
+                            TextStyle(fontSize: 16, color: Color(0xFFCC5311)),
                       ),
                     ),
                   ],
@@ -208,7 +212,7 @@ class _SignUpViewState extends State<SignUpView> {
         enabledBorder: OutlineInputBorder(
             borderSide: BorderSide(color: Color(0xFF0D23DA))),
         focusedBorder:
-        OutlineInputBorder(borderSide: BorderSide(color: Colors.white)),
+            OutlineInputBorder(borderSide: BorderSide(color: Colors.white)),
         filled: true,
         labelStyle: TextStyle(color: Color(0xFF949494)),
         labelText: label,

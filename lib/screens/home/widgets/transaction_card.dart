@@ -12,7 +12,8 @@ class TransactionCard extends StatelessWidget {
     required this.data,
   });
 
-  final NumberFormat currencyFormat = NumberFormat.currency(locale: 'vi_VN', symbol: '₫');
+  final NumberFormat currencyFormat =
+      NumberFormat.currency(locale: 'vi_VN', symbol: '₫');
   final AppIcons appIcons = AppIcons();
 
   @override

@@ -8,12 +8,13 @@ class HeroCard extends StatelessWidget {
     super.key,
     required this.userId,
   });
+
   final String userId;
 
   @override
   Widget build(BuildContext context) {
     final Stream<DocumentSnapshot> _usersStream =
-    FirebaseFirestore.instance.collection('users').doc(userId).snapshots();
+        FirebaseFirestore.instance.collection('users').doc(userId).snapshots();
     return StreamBuilder<DocumentSnapshot>(
       stream: _usersStream,
       builder:
@@ -45,10 +46,13 @@ class Cards extends StatelessWidget {
     super.key,
     required this.data,
   });
+
   final Map data;
+
   @override
   Widget build(BuildContext context) {
-    final NumberFormat currencyFormat = NumberFormat.currency(locale: 'vi_VN', symbol: '₫');
+    final NumberFormat currencyFormat =
+        NumberFormat.currency(locale: 'vi_VN', symbol: '₫');
     return Container(
       color: Colors.blueAccent.shade100,
       child: Column(
@@ -87,14 +91,16 @@ class Cards extends StatelessWidget {
             child: Row(children: [
               CardOne(
                 color: Colors.green,
-                heading: 'Thu', amount: (currencyFormat.format(data['totalCredit'])),
+                heading: 'Thu',
+                amount: (currencyFormat.format(data['totalCredit'])),
               ),
               SizedBox(
                 width: 10,
               ),
               CardOne(
                 color: Colors.red,
-                heading: 'Chi', amount: (currencyFormat.format(data['totalDebit'])),
+                heading: 'Chi',
+                amount: (currencyFormat.format(data['totalDebit'])),
               ),
             ]),
           )
@@ -111,6 +117,7 @@ class CardOne extends StatelessWidget {
     required this.heading,
     required this.amount,
   });
+
   final Color color;
   final String heading;
   final String amount;

@@ -16,13 +16,11 @@ class _StatisticsScreenState extends State<StatisticsScreen> {
   int _selectedIndex = 0;
   DateTime currentMonth = DateTime.now();
 
-  // Define a list of items
   final List<String> categories = [
     'Tài chính',
     'Danh mục',
     'Dòng tiền',
   ];
-  // Define a list of corresponding chart widgets
 
   void previousMonth() {
     setState(() {

@@ -73,7 +73,8 @@ class _BarChartScreenState extends State<BarChartScreen> {
                   .collection('users')
                   .doc(userId)
                   .collection('transactions')
-                  .where('monthyear', isEqualTo: DateFormat('M/y').format(currentMonth))
+                  .where('monthyear',
+                      isEqualTo: DateFormat('M/y').format(currentMonth))
                   .orderBy('timestamp', descending: true)
                   .snapshots(),
               builder: (context, snapshot) {
@@ -88,20 +89,28 @@ class _BarChartScreenState extends State<BarChartScreen> {
                       .map((doc) => Transaction.fromDocument(doc))
                       .toList();
 
-                  // Create a map to store the latest transaction for each monthYear
+                  // Tạo 1 map để lưu trữ giao dịch mới nhất của mỗi monthYear
                   Map<String, Transaction> latestTransactions = {};
                   for (var transaction in transactions) {
-                    if (!latestTransactions.containsKey(transaction.monthYear) ||
-                        latestTransactions[transaction.monthYear]!.timestamp.compareTo(transaction.timestamp) < 0) {
+                    if (!latestTransactions
+                            .containsKey(transaction.monthYear) ||
+                        latestTransactions[transaction.monthYear]!
+                                .timestamp
+                                .compareTo(transaction.timestamp) <
+                            0) {
                       latestTransactions[transaction.monthYear] = transaction;
                     }
                   }
 
-                  List<Transaction> combinedTransactionList = latestTransactions.values.toList();
-                  combinedTransactionList.sort((a, b) => a.monthYear.compareTo(b.monthYear));
+                  List<Transaction> combinedTransactionList =
+                      latestTransactions.values.toList();
+                  combinedTransactionList
+                      .sort((a, b) => a.monthYear.compareTo(b.monthYear));
 
-                  double totalCredit = combinedTransactionList.fold(0, (sum, item) => sum + item.totalCredit);
-                  double totalDebit = combinedTransactionList.fold(0, (sum, item) => sum + item.totalDebit);
+                  double totalCredit = combinedTransactionList.fold(
+                      0, (sum, item) => sum + item.totalCredit);
+                  double totalDebit = combinedTransactionList.fold(
+                      0, (sum, item) => sum + item.totalDebit);
                   double remainingAmount = totalCredit - totalDebit;
 
                   return Column(
@@ -113,7 +122,7 @@ class _BarChartScreenState extends State<BarChartScreen> {
                           border: Border.all(color: Colors.black, width: 1),
                         ),
                         child: SizedBox(
-                          height: 400, // Example size for TransactionBarChart
+                          height: 400,
                           child: TransactionBarChart(
                             data: combinedTransactionList,
                             currencyFormat: currencyFormat,

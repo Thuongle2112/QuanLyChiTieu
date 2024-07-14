@@ -28,7 +28,8 @@ class _LineChartPageState extends State<LineChartPage> {
   Widget build(BuildContext context) {
     final userId = FirebaseAuth.instance.currentUser!.uid;
 
-    NumberFormat currencyFormat = NumberFormat.currency(locale: 'vi_VN', symbol: '₫');
+    NumberFormat currencyFormat =
+        NumberFormat.currency(locale: 'vi_VN', symbol: '₫');
 
     return Scaffold(
       appBar: AppBar(
@@ -51,9 +52,10 @@ class _LineChartPageState extends State<LineChartPage> {
                       .collection('users')
                       .doc(userId)
                       .collection('transactions')
-                      .where('monthyear', isEqualTo: DateFormat('M/y').format(currentMonth))
+                      .where('monthyear',
+                          isEqualTo: DateFormat('M/y').format(currentMonth))
                       .orderBy('timestamp', descending: true)
-                      .limit(5) // Limit to 5 latest records
+                      .limit(5)
                       .snapshots(),
                   builder: (context, snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting) {
@@ -64,22 +66,26 @@ class _LineChartPageState extends State<LineChartPage> {
                       return SliverToBoxAdapter(
                         child: Center(child: Text('Lỗi tìm nạp dữ liệu')),
                       );
-                    } else if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
+                    } else if (!snapshot.hasData ||
+                        snapshot.data!.docs.isEmpty) {
                       return SliverToBoxAdapter(
                         child: Center(child: Text('Chưa có giao dịch')),
                       );
                     } else {
                       List<FlSpot> dataPoints = [];
-                      Map<double, String> labels = {}; // To store labels for each data point
+                      Map<double, String> labels =
+                          {}; // Lưu nhãn cho từng điểm dữ liệu
 
                       for (var doc in snapshot.data!.docs) {
-                        Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
+                        Map<String, dynamic> data =
+                            doc.data() as Map<String, dynamic>;
                         int timestamp = data['timestamp'];
-                        double? remainingAmount = data['remainingAmount']?.toDouble();
+                        double? remainingAmount =
+                            data['remainingAmount']?.toDouble();
                         String monthYear = data['monthyear'];
 
-                        // Add debugging statement
-                        print('Document ID: ${doc.id}, Timestamp: $timestamp, Remaining Amount: $remainingAmount, MonthYear: $monthYear');
+                        print(
+                            'Document ID: ${doc.id}, Timestamp: $timestamp, Remaining Amount: $remainingAmount, MonthYear: $monthYear');
 
                         if (remainingAmount != null && !remainingAmount.isNaN) {
                           // Check if the timestamp is in seconds and convert to milliseconds if necessary
@@ -89,21 +95,23 @@ class _LineChartPageState extends State<LineChartPage> {
                           }
                           double xValue = timestamp.toDouble();
                           dataPoints.add(FlSpot(xValue, remainingAmount));
-                          labels[xValue] = '${currencyFormat.format(remainingAmount)}\n$monthYear'; // Format the currency
+                          labels[xValue] =
+                              '${currencyFormat.format(remainingAmount)}\n$monthYear'; // Format the currency
                         }
                       }
 
-                      // Sort data points by timestamp in ascending order for correct chart display
+                      // Sắp xếp các điểm dữ liệu theo timestamp theo thứ tự tăng dần
                       dataPoints.sort((a, b) => a.x.compareTo(b.x));
 
                       if (dataPoints.isEmpty) {
                         return SliverToBoxAdapter(
-                          child: Center(child: Text('Không có dữ liệu sẵn cho biểu đồ')),
+                          child: Center(
+                              child: Text('Không có dữ liệu sẵn cho biểu đồ')),
                         );
                       }
                       return SliverToBoxAdapter(
                         child: Container(
-                          height: 300, // Set a fixed height for LineChart
+                          height: 300,
                           child: LineChart(
                             LineChartData(
                               gridData: FlGridData(show: false),
@@ -120,18 +128,20 @@ class _LineChartPageState extends State<LineChartPage> {
                               ),
                               borderData: FlBorderData(
                                 show: true,
-                                border: Border.all(color: Colors.black12, width: 1),
+                                border:
+                                    Border.all(color: Colors.black12, width: 1),
                               ),
                               lineBarsData: [
                                 LineChartBarData(
                                   spots: dataPoints,
-                                  isCurved: false, // Make lines straight
-                                  color: Colors.blue, // Color of the line
+                                  isCurved: false, // Chỉnh line thẳng
+                                  color: Colors.blue, // Màu của line
                                   barWidth: 4,
                                   belowBarData: BarAreaData(show: false),
                                   dotData: FlDotData(
                                     show: true,
-                                    getDotPainter: (spot, percent, barData, index) {
+                                    getDotPainter:
+                                        (spot, percent, barData, index) {
                                       return FlDotCirclePainter(
                                         radius: 4,
                                         color: Colors.blue,
@@ -144,11 +154,16 @@ class _LineChartPageState extends State<LineChartPage> {
                               ],
                               minX: dataPoints.first.x,
                               maxX: dataPoints.last.x,
-                              minY: dataPoints.map((spot) => spot.y).reduce((a, b) => a < b ? a : b),
-                              maxY: dataPoints.map((spot) => spot.y).reduce((a, b) => a > b ? a : b),
+                              minY: dataPoints
+                                  .map((spot) => spot.y)
+                                  .reduce((a, b) => a < b ? a : b),
+                              maxY: dataPoints
+                                  .map((spot) => spot.y)
+                                  .reduce((a, b) => a > b ? a : b),
                               lineTouchData: LineTouchData(
                                 touchTooltipData: LineTouchTooltipData(
-                                  getTooltipItems: (List<LineBarSpot> touchedSpots) {
+                                  getTooltipItems:
+                                      (List<LineBarSpot> touchedSpots) {
                                     return touchedSpots.map((touchedSpot) {
                                       final text = labels[touchedSpot.x];
                                       return LineTooltipItem(

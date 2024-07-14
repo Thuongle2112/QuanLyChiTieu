@@ -19,6 +19,7 @@ class TransactionList extends StatelessWidget {
   final String category;
   final String type;
   final String monthYear;
+
   @override
   Widget build(BuildContext context) {
     Query query = FirebaseFirestore.instance
@@ -29,7 +30,7 @@ class TransactionList extends StatelessWidget {
         .where('monthyear', isEqualTo: monthYear)
         .where('type', isEqualTo: type);
 
-    if (category != 'All') {
+    if (category != 'Tất cả') {
       query = query.where('category', isEqualTo: category);
     }
 
@@ -50,7 +51,7 @@ class TransactionList extends StatelessWidget {
             itemCount: data.length,
             itemBuilder: (context, index) {
               var cardData = data[index];
-              var transactionId = cardData.id; // Assuming id is the document ID
+              var transactionId = cardData.id;
 
               return Slidable(
                 endActionPane: ActionPane(
@@ -58,7 +59,8 @@ class TransactionList extends StatelessWidget {
                   children: [
                     SlidableAction(
                       onPressed: (context) {
-                        _showEditTransactionDialog(context, userId, transactionId, cardData);
+                        _showEditTransactionDialog(
+                            context, userId, transactionId, cardData);
                       },
                       backgroundColor: const Color(0xFF7BC043),
                       foregroundColor: Colors.white,
@@ -67,7 +69,8 @@ class TransactionList extends StatelessWidget {
                     ),
                     SlidableAction(
                       onPressed: (context) {
-                        Utils.deleteTransaction(context, userId, transactionId, cardData);
+                        Utils.deleteTransaction(
+                            context, userId, transactionId, cardData);
                       },
                       backgroundColor: const Color(0xFFFC0707),
                       foregroundColor: Colors.white,
@@ -86,18 +89,18 @@ class TransactionList extends StatelessWidget {
   }
 }
 
-void _showEditTransactionDialog(BuildContext context, String userId, String transactionId, DocumentSnapshot cardData) {
+void _showEditTransactionDialog(BuildContext context, String userId,
+    String transactionId, DocumentSnapshot cardData) {
   showDialog(
     context: context,
     builder: (BuildContext context) {
       return Dialog(
         child: EditTransactionScreen(
-          userData: null, // Pass any necessary user data if needed
-          transactionData: cardData.data() as Map<String, dynamic>?, // Pass transaction data
+          userData: null,
+          transactionData:
+              cardData.data() as Map<String, dynamic>?,
         ),
       );
     },
   );
 }
-
-

@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-import '../screens/home/home_screen.dart';
 import '../utils/appvalidator.dart';
 
 class EditProfileService {
@@ -158,7 +157,7 @@ class EditProfileService {
                   );
                 } catch (e) {
                   ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text('Failed to change password: $e')),
+                    SnackBar(content: Text('Không thể thay đổi mật khẩu: $e')),
                   );
                 }
               },
@@ -184,16 +183,15 @@ class EditProfileService {
           actions: [
             TextButton(
               onPressed: () async {
-                Navigator.pop(context); // Close dialog
+                Navigator.pop(context); // Đóng dialog
 
-                // Get all transactions
                 QuerySnapshot transactionsSnapshot = await _firestore
                     .collection('users')
                     .doc(user.uid)
                     .collection("transactions")
                     .get();
 
-                // Copy transactions to backup collection
+                // Sao chép giao dịch vào backup collection
                 WriteBatch batch = _firestore.batch();
                 for (DocumentSnapshot doc in transactionsSnapshot.docs) {
                   batch.set(
@@ -206,19 +204,16 @@ class EditProfileService {
                   );
                 }
 
-                // Commit the batch write to backup
                 await batch.commit();
 
-                // Create a new batch for deletion
+                // Tạo một batch mới để xóa
                 WriteBatch deleteBatch = _firestore.batch();
                 for (DocumentSnapshot doc in transactionsSnapshot.docs) {
                   deleteBatch.delete(doc.reference);
                 }
 
-                // Commit the batch delete
                 await deleteBatch.commit();
 
-                // Update total values to zero
                 await _firestore.collection('users').doc(user.uid).update({
                   'totalCredit': 0,
                   'totalDebit': 0,
@@ -227,7 +222,7 @@ class EditProfileService {
 
                 // Fetch updated user data
                 DocumentSnapshot updatedUserDoc =
-                await _firestore.collection('users').doc(user.uid).get();
+                    await _firestore.collection('users').doc(user.uid).get();
                 refreshData(updatedUserDoc.data() as Map<String, dynamic>);
 
                 ScaffoldMessenger.of(context).showSnackBar(
@@ -241,7 +236,7 @@ class EditProfileService {
             ),
             TextButton(
               onPressed: () {
-                Navigator.pop(context); // Close dialog
+                Navigator.pop(context); // Đóng dialog
               },
               child: Text('Hủy'),
             ),

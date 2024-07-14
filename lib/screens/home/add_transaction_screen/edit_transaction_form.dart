@@ -31,7 +31,7 @@ class _EditTransactionScreenState extends State<EditTransactionScreen> {
   @override
   void initState() {
     super.initState();
-    // Set initial values based on transactionData if available
+
     if (widget.transactionData != null) {
       titleEditController.text = widget.transactionData!['title'];
       amountEditController.text = widget.transactionData!['amount'].toString();
@@ -70,7 +70,6 @@ class _EditTransactionScreenState extends State<EditTransactionScreen> {
       final DateTime date = _selectedDate ?? DateTime.now();
       final int newTimestamp = date.microsecondsSinceEpoch;
 
-      // Retrieve the existing transaction data
       final existingTransactionDoc = await FirebaseFirestore.instance
           .collection('users')
           .doc(userId)
@@ -83,26 +82,23 @@ class _EditTransactionScreenState extends State<EditTransactionScreen> {
       final String oldType = existingTransactionData['type'];
       final int oldTimestamp = existingTransactionData['timestamp'];
 
-      // Initialize variables for total updates
       int creditChange = 0;
       int debitChange = 0;
 
-      // Calculate amount changes
       if (oldType == 'credit') {
-        creditChange = -oldAmount; // Remove the old credit amount
+        creditChange = -oldAmount;
       } else {
-        debitChange = -oldAmount; // Remove the old debit amount
+        debitChange = -oldAmount;
       }
 
       if (newAmount > 0) {
         if (type == 'credit') {
-          creditChange += newAmount; // Add the new credit amount
+          creditChange += newAmount;
         } else {
-          debitChange += newAmount; // Add the new debit amount
+          debitChange += newAmount;
         }
       }
 
-      // Update the transaction document with the new amount, type, and keep the original timestamp
       await FirebaseFirestore.instance
           .collection('users')
           .doc(userId)
@@ -111,24 +107,23 @@ class _EditTransactionScreenState extends State<EditTransactionScreen> {
           .update({
         'amount': newAmount,
         'type': type,
-        'totalAmount': newAmount, // Updated total amount
-        'date': date, // Keep original date
-        'timestamp': oldTimestamp, // Keep original timestamp
+        'totalAmount': newAmount,
+        'date': date,
+        'timestamp': oldTimestamp,
       });
 
-      // Update the totals in the user document
-      final userDoc = FirebaseFirestore.instance.collection('users').doc(userId);
+
+      final userDoc =
+          FirebaseFirestore.instance.collection('users').doc(userId);
 
       await FirebaseFirestore.instance.runTransaction((transaction) async {
         final userSnapshot = await transaction.get(userDoc);
         final userData = userSnapshot.data()!;
 
-        // Calculate new totalCredit and totalDebit
         int totalCredit = (userData['totalCredit'] as int) + creditChange;
         int totalDebit = (userData['totalDebit'] as int) + debitChange;
         int remainingAmount = totalCredit - totalDebit;
 
-        // Update the user document with new totals
         transaction.update(userDoc, {
           'totalCredit': totalCredit,
           'totalDebit': totalDebit,
@@ -142,7 +137,6 @@ class _EditTransactionScreenState extends State<EditTransactionScreen> {
       });
     }
   }
-
 
   @override
   Widget build(BuildContext context) {

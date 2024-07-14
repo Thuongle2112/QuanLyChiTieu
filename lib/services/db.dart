@@ -3,7 +3,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class Db {
-  final CollectionReference users = FirebaseFirestore.instance.collection('users');
+  final CollectionReference users =
+      FirebaseFirestore.instance.collection('users');
 
   Future<void> addUser(Map<String, dynamic> data, BuildContext context) async {
     final userId = FirebaseAuth.instance.currentUser!.uid;
@@ -13,7 +14,7 @@ class Db {
 
     try {
       await users.doc(userId).set(data);
-      print("User Added");
+      print("User đã thêm");
     } catch (error) {
       _showErrorDialog(context, "Đăng ký thất bại", error.toString());
     }

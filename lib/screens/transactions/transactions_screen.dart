@@ -52,7 +52,6 @@ class _TransactionsScreenState extends State<TransactionsScreen> {
   }
 
   void _searchTransactions(String query) {
-    // Implement your search logic here
     print("Searching for: $query");
   }
 
@@ -72,15 +71,15 @@ class _TransactionsScreenState extends State<TransactionsScreen> {
         title: !isSearching
             ? Text("Giao dịch", style: TextStyle(color: Colors.white))
             : TextField(
-          controller: searchController,
-          style: TextStyle(color: Colors.white),
-          decoration: InputDecoration(
-            hintText: "Search transactions...",
-            hintStyle: TextStyle(color: Colors.white),
-            border: InputBorder.none,
-          ),
-          onChanged: (query) => _searchTransactions(query),
-        ),
+                controller: searchController,
+                style: TextStyle(color: Colors.white),
+                decoration: InputDecoration(
+                  hintText: "Search transactions...",
+                  hintStyle: TextStyle(color: Colors.white),
+                  border: InputBorder.none,
+                ),
+                onChanged: (query) => _searchTransactions(query),
+              ),
         actions: [
           IconButton(
             onPressed: () {
