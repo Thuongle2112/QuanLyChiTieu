@@ -14,7 +14,7 @@ class TransactionsScreen extends StatefulWidget {
 }
 
 class _TransactionsScreenState extends State<TransactionsScreen> {
-  var category = "All";
+  var category = "Tất cả";
   var monthYear = "";
   bool isSearching = false;
   TextEditingController searchController = TextEditingController();

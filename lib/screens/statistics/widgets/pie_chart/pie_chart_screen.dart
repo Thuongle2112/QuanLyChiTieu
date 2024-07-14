@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'dart:math';
 import '../../../../utils/icons_list.dart';
-import '../../../home/widgets/transaction_card.dart';
 
 class PieChartScreen extends StatefulWidget {
   @override
@@ -49,7 +48,7 @@ class _PieChartScreenState extends State<PieChartScreen> {
                       var transaction = transactions[index];
                       return Card(
                         child: ListTile(
-                          leading: Icon(transaction['icon']),
+                          leading: Icon(appIcons.getExpenseCategoryIcons(transaction['category'])),
                           title: Text('Category: ${transaction['category']}'),
                           subtitle: Text(
                             'Số tiền: ${NumberFormat.currency(locale: 'vi_VN', symbol: '₫').format(transaction['amount'])}',
