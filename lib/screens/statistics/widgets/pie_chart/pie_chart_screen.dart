@@ -49,7 +49,7 @@ class _PieChartScreenState extends State<PieChartScreen> {
                       return Card(
                         child: ListTile(
                           leading: Icon(appIcons.getExpenseCategoryIcons(transaction['category'])),
-                          title: Text('Category: ${transaction['category']}'),
+                          title: Text('Danh mục: ${transaction['category']}'),
                           subtitle: Text(
                             'Số tiền: ${NumberFormat.currency(locale: 'vi_VN', symbol: '₫').format(transaction['amount'])}',
                           ),
